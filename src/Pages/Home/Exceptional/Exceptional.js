@@ -3,7 +3,7 @@ import treatment from '../../../assets/images/treatment.png'
 
 const Exceptional = () => {
     return (
-        <div className='lg:mx-36 my-8 lg:my-40'>
+        <div className='my-8 lg:m-36'>
             <div className="card lg:items-center md:card-side bg-base-100 ">
                 <img className="rounded-xl lg:w-1/2" src={treatment} alt="treatment" />
                 <div className="card-body align-middle">
