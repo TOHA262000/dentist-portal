@@ -1,7 +1,30 @@
+import { format } from 'date-fns';
 import React from 'react';
 
-const BookingModal = ({selectedTreatment}) => {
-    const {name,slots}=selectedTreatment
+const BookingModal = ({ selectedTreatment, selectedDate }) => {
+    const { name, slots } = selectedTreatment;
+    const date = format(selectedDate, 'PP');
+
+    const bookingHandle = event => {
+        event.preventDefault();
+        const form = event.target;
+        const patientName = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const slot = form.slot.value; 
+        const booking={
+            appointmentDate:date,
+            slot,
+            treatment:name,
+            patientName,
+            email,
+            phone,
+        }
+        console.log(booking);
+    }
+    
+
+    
     return (
         <div>
             <input type="checkbox" id="booking-modal" className="modal-toggle" />
@@ -9,7 +32,16 @@ const BookingModal = ({selectedTreatment}) => {
                 <div className="modal-box relative">
                     <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold">{name}</h3>
-                    <p className="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
+                    <form onSubmit={bookingHandle} className='grid gap-2 grid-cols-1 mt-5' >
+                        <input type="text" disabled value={date} className="input input-bordered w-full" />
+                        <select name='slot' className="select select-bordered w-full">
+                            {slots.map((slot,i)=><option key={i} value={slot}>{slot}</option>)}
+                        </select>
+                        <input name='name' type="text" placeholder="Your Name" className="input input-bordered w-full" />
+                        <input required name='phone' type="text" placeholder="Phone Number" className="input input-bordered w-full" />
+                        <input required name='email' type="email" placeholder="Email" className="input input-bordered w-full" />
+                        <input type="submit" className="btn w-full" />
+                    </form>
                 </div>
             </div>
         </div>
