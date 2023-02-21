@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {
-    const { register,formState:{errors} , handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const handleSignUp = data => {
         console.log(data);
     }
@@ -16,35 +16,40 @@ const SignUp = () => {
                         <label className="label">
                             <span className="label-text">Name</span>
                         </label>
-                        <input type="text"
-                            {...register("name",{required:"Name is required"})}
-                            className="input input-bordered w-full" />
+                        <input type="text"{...register("name",
+                            {
+                                required: "Name is required"
+                            })} className="input input-bordered w-full" />
                         {errors.name && <p className='text-error'>{errors.name?.message}</p>}
                     </div>
                     <div className="form-control w-full ">
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <input type="email"
-                            {...register("email",{required:"Email address is required"})}
-                            className="input input-bordered w-full" />
-                        {errors.email&&<p className='text-error'>{errors.email?.message}</p>}
+                        <input type="email" {...register("email",
+                            {
+                                required: "Email address is required"
+                            })} className="input input-bordered w-full" />
+                        {errors.email && <p className='text-error'>{errors.email?.message}</p>}
                     </div>
                     <div className="form-control w-full ">
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
-                        <input type="password"
-                            {...register("password",{required:"Password is required",minLength:{value:6,message:"Password must be 6 charecter or longer"}})}
-                            className="input input-bordered w-full " />
-                        {errors.password&&<p className='text-error'>{errors.password?.message}</p>}
+                        <input type="password"{...register("password",
+                            {
+                                required: "Password is required",
+                                minLength: { value: 6, message: "Password must be 6 charecter or longer" },
+                                pattern:{value:/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/,message:"At least one uppercase letter, one lowercase letter and one number:"},
+                            })} className="input input-bordered w-full " />
+                        {errors.password && <p className='text-error'>{errors.password?.message}</p>}
                         <label className="label">
                             <span className="label-text-alt">Forgot Password?</span>
                         </label>
                     </div>
                     <div className="form-control w-full ">
 
-                        <input className='btn btn-accent w-full' type="submit" value='Login' />
+                        <input className='btn btn-accent w-full' type="submit" value='Sign Up' />
                         <label className="label text-center ">
                             <p><span className="label-text-alt">Already have an account <Link to='/login' className='text-primary'>Login</Link></span></p>
                         </label>
