@@ -1,11 +1,27 @@
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
+    const{signIn,signInWithGoogle}=useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
-
     const handleLogin = data =>{
         console.log(data);
+        signIn(data.email,data.password)
+        .then(result=>{
+            const user = result.user;
+            console.log(user)
+        })
+        .catch(err=>console.log(err));
+    }
+    const handleGoogleSignIn=()=>{
+        signInWithGoogle()
+        .then(result=>{
+            const user = result.user;
+            console.log(user);
+        })
+        .catch(err=>console.log(err));
     }
     return (
         <div className="hero min-h-screen flex justify-center items-center">
@@ -40,10 +56,11 @@ const Login = () => {
                             <p><span className="label-text-alt">New to Dentist Portal <Link to='/signup' className='text-primary'>Creat Account</Link></span></p>
                         </label>
                     </div>
-                    <div className="divider">OR</div>
-                    <button className="btn btn-outline w-full">Continue with google</button>
                     
                 </form>
+                <div className="divider">OR</div>
+                <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">Continue with google</button>
+                    
             </div>
 
         </div>

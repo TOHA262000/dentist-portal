@@ -64,9 +64,10 @@ const SignUp = () => {
                             <p><span className="label-text-alt">Already have an account <Link to='/login' className='text-primary'>Login</Link></span></p>
                         </label>
                     </div>
-                    <div className="divider">OR</div>
-                    <button className="btn btn-outline w-full">Continue with google</button>
+                    
                 </form>
+                <div className="divider">OR</div>
+                    <button className="btn btn-outline w-full">Continue with google</button>
             </div>
         </div>
     );
