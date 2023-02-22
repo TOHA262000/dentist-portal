@@ -1,24 +1,38 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
     const{signIn,signInWithGoogle}=useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const [loginError,setLoginError]= useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+
+   
     const handleLogin = data =>{
+        setLoginError('');
         console.log(data);
         signIn(data.email,data.password)
         .then(result=>{
             const user = result.user;
+            navigate(from, { replace: true });
             console.log(user)
         })
-        .catch(err=>console.log(err));
+        .catch(err=>{
+            setLoginError(err.message);
+            console.log(err.message);
+            
+        });
     }
     const handleGoogleSignIn=()=>{
         signInWithGoogle()
         .then(result=>{
             const user = result.user;
+            navigate(from, { replace: true });
             console.log(user);
         })
         .catch(err=>console.log(err));
@@ -52,12 +66,14 @@ const Login = () => {
                     <div className="form-control w-full ">
                         
                         <input className='btn btn-accent w-full' type="submit" value='Login'/>
+                        {loginError&&<p className='text-error'>{loginError}</p>}
                         <label className="label text-center ">
                             <p><span className="label-text-alt">New to Dentist Portal <Link to='/signup' className='text-primary'>Creat Account</Link></span></p>
                         </label>
                     </div>
                     
                 </form>
+
                 <div className="divider">OR</div>
                 <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">Continue with google</button>
                     
