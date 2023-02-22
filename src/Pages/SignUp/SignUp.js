@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
-    const {createUser,updateUser} = useContext(AuthContext);
+    const {createUser,updateUser,verifyEmail} = useContext(AuthContext);
     
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
@@ -20,7 +20,11 @@ const SignUp = () => {
             }
             updateUser(userInfo)
             .then(()=>{
-                navigate('/');
+                verifyEmail()
+                .then(()=>{
+                    console.log('Email Verification')
+                })
+                .catch(err=>console.log(err))
             })
             .catch(err=>console.log(err))
             

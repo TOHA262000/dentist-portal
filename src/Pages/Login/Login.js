@@ -32,8 +32,8 @@ const Login = () => {
         signInWithGoogle()
         .then(result=>{
             const user = result.user;
-            navigate(from, { replace: true });
             console.log(user);
+            navigate(from, { replace: true });
         })
         .catch(err=>console.log(err));
     }
@@ -59,8 +59,8 @@ const Login = () => {
                             {...register("password",{required:"Password is required", minLength: { value: 6, message: "Password must be 6 character or longer" }})}
                             className="input input-bordered w-full " />
                         {errors.password && <p className='text-error'>{errors.password?.message}</p>}
-                        <label className="label">
-                            <span className="label-text-alt">Forgot Password?</span>
+                        <label  className="label">
+                            <Link to='/forgetpass'  className="label-text-alt">Forgot Password?</Link>
                         </label>
                     </div>
                     <div className="form-control w-full ">
@@ -78,7 +78,6 @@ const Login = () => {
                 <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">Continue with google</button>
                     
             </div>
-
         </div>
     );
 };

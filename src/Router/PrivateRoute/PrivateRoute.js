@@ -9,7 +9,7 @@ const PrivateRoute = ({children}) => {
     if(loading){
       return <progress className="progress w-full"></progress>
     }
-    if (!user) {
+    if (!user?.emailVerified) {
       return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
     }
       
