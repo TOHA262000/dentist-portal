@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const ToggleButton = () => {
-    const [isDark,setIsDark]=useState(true);
-    const handleToggle=()=>{
-        setIsDark(!isDark);
-        console.log(isDark);
+    const { isDark, setIsDark } = useContext(AuthContext);
+    const handleThemeChange = () => {
+        setIsDark(!isDark)
     }
     return (
-        <input onClick={handleToggle} type="checkbox" className="toggle"/>
+        <div onClick={handleThemeChange} className=" form-control">
+            <label className="label cursor-pointer">
+                <input type="checkbox" className="toggle" />
+            </label>
+        </div>
     );
 };
 

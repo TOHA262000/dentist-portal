@@ -48,13 +48,7 @@ const BookingModal = ({ selectedTreatment,refetch, setSelectedTreatment, selecte
         .catch((error) => {
           console.error('Error:', error);
         });
-        
-        
-
     }
-
-
-
     return (
         <>
             <input type="checkbox" id="booking-modal" className="modal-toggle" />

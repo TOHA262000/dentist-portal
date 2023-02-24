@@ -9,6 +9,7 @@ const provider = new GoogleAuthProvider(); //firebase
 const AuthProvider = ({children}) => {
     const [user,setUser]=useState(null)
     const [loading,setLoading]=useState(true)
+    const [isDark,setIsDark]=useState(false);
     //firebase related
     const createUser=(email,password)=>{
         setLoading(true);
@@ -54,7 +55,9 @@ const AuthProvider = ({children}) => {
         user,
         loading,
         updateUser,
-        logOut
+        logOut,
+        isDark,
+        setIsDark
     }
     return (
         //context related

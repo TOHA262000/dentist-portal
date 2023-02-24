@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import ToggleButton from './ToggleButton';
 
 const Nav = () => {
     const {user,logOut}=useContext(AuthContext);
@@ -16,12 +17,13 @@ const Nav = () => {
         <li><Link to='/appointment'>Appointment</Link></li>
         <li><Link to='/about'>About</Link></li>
         <li><Link to='/dashboard'>Dashboard</Link></li>
+        <li><ToggleButton></ToggleButton></li>
         {user?.emailVerified?<li><Link onClick={handleSignOut}>Sign Out</Link></li>:
             <li><Link to="/login">Login</Link></li>}
     </React.Fragment>
     return (
         <div>
-            <div className="navbar bg-base-100 flex justify-between">
+            <div className="navbar  flex justify-between">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">

@@ -6,12 +6,9 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        portalTheme: {
-
+        mytheme: {
           primary: "#0FCFEC",
-
           secondary: "#19D3AE",
-
           accent: "#3A4256",
 
           neutral: "#3D4451",
@@ -27,6 +24,7 @@ module.exports = {
           error: "#F87272",
         },
       },
+      "dark",
     ],
   },
   theme: {
