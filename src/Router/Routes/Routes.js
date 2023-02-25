@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layouts/DashboardLayout";
 import Main from "../../Layouts/Main";
 import Appointment from "../../Pages/Appointment/Appointment/Appointment";
-import Dashboard from "../../Pages/Dashboard/Dashboard";
+import Feture from "../../Pages/Dashboard/Feture/Feture";
+import Dashboard from "../../Pages/Dashboard/MyAppointment/Dashboard";
 import Home from "../../Pages/Home/Home/Home";
 import ForgetPasswordModal from "../../Pages/Login/ForgetPasswordModal";
 import Login from "../../Pages/Login/Login";
@@ -33,16 +34,28 @@ const router = createBrowserRouter([
             {
                 path:"/forgetpass",
                 element:<ForgetPasswordModal></ForgetPasswordModal>
+            },
+            {
+                path:'*',
+                element:'NO ITEAMS ARE FOUND'
             }
         ],
       },
       {
         path:'/dashboard',
-        element:<DashboardLayout></DashboardLayout>,
+        element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children:[
             {
                 path:'/dashboard',
-                element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+                element:<Dashboard></Dashboard>
+            },
+            {
+                path:'/dashboard/feture',
+                element:<Feture></Feture>
+            },
+            {
+                path:'*',
+                element:'NO ITEAMS ARE FOUND'
             }
         ]
       }
