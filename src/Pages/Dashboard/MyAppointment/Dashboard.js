@@ -11,7 +11,7 @@ const Dashboard = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showCalender, setShowCalender] = useState(false);
     const formatedDate = format(selectedDate, 'PP');
-    const{refetch}=useQuery({
+    const { refetch } = useQuery({
         queryKey: ['bookings', formatedDate, user.email],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`);
@@ -28,7 +28,7 @@ const Dashboard = () => {
     //If user click the selected date twice Then not set setSelectedDate value undefined
     const handleSelectedDate = (date) => {
         console.log(date)
-        if(!date){
+        if (!date) {
             return;
         }
         if (date.getTime() === selectedDate.getTime()) {
@@ -52,9 +52,10 @@ const Dashboard = () => {
                 <h1 className='text-3xl' >My appointment</h1>
 
                 <div>
-
-                    <label onClick={handleCalender} className="btn btn-outline">{formatedDate}</label>
-                    <label onClick={handleAllBooking} className="btn btn-outline">All Booking</label>
+                    <div>
+                        <label onClick={handleCalender} className="md:mr-2 my-2 lg:my-0 btn  btn-accent">{formatedDate}</label>
+                        <label onClick={handleAllBooking} className=" btn btn-outline">All Booking</label>
+                    </div>
                     <div className='bg-gray-200  mt-4 rounded absolute top-12 right-0 z-10 right-0'>
                         {showCalender && <DayPicker
                             mode='single'

@@ -14,7 +14,7 @@ const DashboardLayout = () => {
                 </div>
                 <div className=" drawer-side">
                     <label htmlFor="dashboard-drawer-2" className="drawer-overlay"></label>
-                    <ul className="bg-white menu p-4 w-80  text-base-content">
+                    <ul className="bg-base-100 menu p-4 w-80  text-base-content">
                         <li><Link to='/dashboard'>My Appointments</Link></li>
                         <li><Link to='/dashboard/feture'>feture</Link></li>
                     </ul>
