@@ -6,11 +6,34 @@ import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
     const {createUser,updateUser,verifyEmail} = useContext(AuthContext);
-    
+
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
+    
+    const handleSaveUser=(name,email)=>{
+         const saveUser={
+            name,
+            email,
+        }
+        fetch('http://localhost:5000/users',{
+            method:'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(saveUser),
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            toast.success('Please Check Your Email for varify');
+            navigate('/');
+        })
+
+
+    }
+    
+// React Form control give a data for all the value from the input field in your form.
     const handleSignUp = data => {
-        
+     
         createUser(data.email,data.password)
         
         .then(result=>{
@@ -23,8 +46,7 @@ const SignUp = () => {
             .then(()=>{
                 verifyEmail()
                 .then(()=>{
-                    toast.success('Please Check Your Email for varify');
-                    navigate('/');
+                    handleSaveUser(data.name,data.email);
                 })
                 .catch(err=>console.log(err))
             })

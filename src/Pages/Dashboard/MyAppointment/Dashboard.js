@@ -7,25 +7,44 @@ import TableRow from './TableRow';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
-    const [date, setDate] = useState(new Date());
+    const [bookings, setBookings] = useState([])
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [showCalender, setShowCalender] = useState(false);
-    const formatedDate = format(date, 'PP');
-    const { data: bookings = [] } = useQuery({
+    const formatedDate = format(selectedDate, 'PP');
+    const{refetch}=useQuery({
         queryKey: ['bookings', formatedDate, user.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`, {
-                method: 'get',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`);
             const data = await res.json();
+            setBookings(data)
             return data;
-
         }
     })
     const handleCalender = () => {
+        refetch()
         setShowCalender(!showCalender);
+    }
+
+    //If user click the selected date twice Then not set setSelectedDate value undefined
+    const handleSelectedDate = (date) => {
+        console.log(date)
+        if(!date){
+            return;
+        }
+        if (date.getTime() === selectedDate.getTime()) {
+            return;
+        }
+        setSelectedDate(date);
+
+    }
+    //All booking show
+    const handleAllBooking = () => {
+        setShowCalender(false);
+        fetch(`http://localhost:5000/bookings/all?email=${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setBookings(data);
+            })
     }
     return (
         <>
@@ -33,12 +52,14 @@ const Dashboard = () => {
                 <h1 className='text-3xl' >My appointment</h1>
 
                 <div>
+
                     <label onClick={handleCalender} className="btn btn-outline">{formatedDate}</label>
+                    <label onClick={handleAllBooking} className="btn btn-outline">All Booking</label>
                     <div className='bg-gray-200  mt-4 rounded absolute top-12 right-0 z-10 right-0'>
                         {showCalender && <DayPicker
                             mode='single'
-                            selected={date}
-                            onSelect={setDate}
+                            selected={selectedDate}
+                            onSelect={handleSelectedDate}
                         />}
                     </div>
 
@@ -52,6 +73,7 @@ const Dashboard = () => {
                             <th>Name</th>
                             <th>Service</th>
                             <th>Time</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +85,7 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
-           
+
         </>
     );
 };

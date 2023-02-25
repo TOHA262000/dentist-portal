@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TableRow = ({booking,index}) => {
-    const {patientName,treatment,slot}=booking;
+    const {patientName,treatment,appointmentDate,slot}=booking;
     return (
         <>
             <tr>
@@ -9,6 +9,7 @@ const TableRow = ({booking,index}) => {
                 <td>{patientName}</td>
                 <td>{treatment}</td>
                 <td>{slot}</td>
+                <td>{appointmentDate}</td>
             </tr>
         </>
     );
