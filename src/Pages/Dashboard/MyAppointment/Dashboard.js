@@ -11,10 +11,16 @@ const Dashboard = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showCalender, setShowCalender] = useState(false);
     const formatedDate = format(selectedDate, 'PP');
+
+    // This is the react - query And here "credentials: 'include'"
+    // means that browser sent the cookie in requests 
+    // headers autometic.
     const { refetch } = useQuery({
         queryKey: ['bookings', formatedDate, user.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`);
+            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`, {
+                credentials: 'include'
+            });
             const data = await res.json();
             setBookings(data)
             return data;

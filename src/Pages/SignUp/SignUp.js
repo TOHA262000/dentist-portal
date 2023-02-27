@@ -5,57 +5,69 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
-    const {createUser,updateUser,verifyEmail} = useContext(AuthContext);
+    const { createUser, updateUser, verifyEmail } = useContext(AuthContext);
 
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
-    
-    const handleSaveUser=(name,email)=>{
-         const saveUser={
+
+    // React Form control give a data for all the value from the input field in your form.
+    const handleSignUp = data => {
+        createUser(data.email, data.password)
+
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        verifyEmail()
+                            .then(() => {
+                                handleSaveUser(data.name, data.email);
+                            })
+                            .catch(err => console.log(err))
+                    })
+                    .catch(err => console.log(err))
+
+            })
+            .catch(err => console.log(err));
+
+    }
+    const handleSaveUser = (name, email) => {
+        const saveUser = {
             name,
             email,
         }
-        fetch('http://localhost:5000/users',{
-            method:'POST',
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(saveUser),
         })
-        .then(res=>res.json())
-        .then(data=>{
-            toast.success('Please Check Your Email for varify');
-            navigate('/');
-        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success('Please Check Your Email for varify');
+                getUserToken(email);
 
-
-    }
-    
-// React Form control give a data for all the value from the input field in your form.
-    const handleSignUp = data => {
-     
-        createUser(data.email,data.password)
-        
-        .then(result=>{
-            const user = result.user;
-            console.log(user);
-            const userInfo = {
-                displayName:data.name
-            }
-            updateUser(userInfo)
-            .then(()=>{
-                verifyEmail()
-                .then(()=>{
-                    handleSaveUser(data.name,data.email);
-                })
-                .catch(err=>console.log(err))
             })
-            .catch(err=>console.log(err))
-            
-        })
-        .catch(err=>console.log(err));
-        
     }
+
+    // Create a JWT token For this valid user and set to httpOnly cookie 
+    const getUserToken = email => {
+        fetch(`http://localhost:5000/jwt?email=${email}`, {
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.accessToken);
+                if (data.accessToken) {
+                    navigate('/');
+                }
+            })
+    }
+
     return (
         <div className="hero min-h-screen flex justify-center items-center">
             <div className='rounded-xl bg-base-100 shadow-xl w-96 p-6'>
@@ -89,7 +101,7 @@ const SignUp = () => {
                             {
                                 required: "Password is required",
                                 minLength: { value: 6, message: "Password must be 6 charecter or longer" },
-                                pattern:{value:/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/,message:"At least one uppercase letter, one lowercase letter and one number:"},
+                                pattern: { value: /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/, message: "At least one uppercase letter, one lowercase letter and one number:" },
                             })} className="input input-bordered w-full " />
                         {errors.password && <p className='text-error'>{errors.password?.message}</p>}
                         <label className="label">
@@ -103,10 +115,10 @@ const SignUp = () => {
                             <p><span className="label-text-alt">Already have an account <Link to='/login' className='text-primary'>Login</Link></span></p>
                         </label>
                     </div>
-                    
+
                 </form>
                 <div className="divider">OR</div>
-                    <button className="btn btn-outline w-full">Continue with google</button>
+                <button className="btn btn-outline w-full">Continue with google</button>
             </div>
         </div>
     );
