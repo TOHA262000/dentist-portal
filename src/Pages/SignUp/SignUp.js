@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
     const { createUser, updateUser, verifyEmail } = useContext(AuthContext);
-
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const [createUserEmail, setCreateUserEmail] = useState('');
+    const [token] = useToken(createUserEmail);
+
+    if(token){
+        navigate('/');
+    }
+
 
     // React Form control give a data for all the value from the input field in your form.
     const handleSignUp = data => {
@@ -49,22 +56,8 @@ const SignUp = () => {
             .then(res => res.json())
             .then(data => {
                 toast.success('Please Check Your Email for varify');
-                getUserToken(email);
+                setCreateUserEmail(email);
 
-            })
-    }
-
-    // Create a JWT token For this valid user and set to httpOnly cookie 
-    const getUserToken = email => {
-        fetch(`http://localhost:5000/jwt?email=${email}`, {
-            credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.accessToken);
-                if (data.accessToken) {
-                    navigate('/');
-                }
             })
     }
 

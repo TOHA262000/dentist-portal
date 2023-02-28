@@ -18,8 +18,8 @@ const Dashboard = () => {
     const { refetch } = useQuery({
         queryKey: ['bookings', formatedDate, user.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`, {
-                credentials: 'include'
+            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`,{
+                credentials:'include'
             });
             const data = await res.json();
             setBookings(data)
