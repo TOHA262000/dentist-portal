@@ -46,11 +46,13 @@ const Dashboard = () => {
     //All booking show
     const handleAllBooking = () => {
         setShowCalender(false);
-        fetch(`http://localhost:5000/bookings/all?email=${user.email}`)
-            .then(res => res.json())
-            .then(data => {
-                setBookings(data);
-            })
+        fetch(`http://localhost:5000/bookings/all?email=${user.email}`, {
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(data => {
+            setBookings(data);
+        })
     }
     return (
         <>

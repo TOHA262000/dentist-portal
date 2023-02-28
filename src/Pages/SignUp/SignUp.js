@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
-    const { createUser, updateUser, verifyEmail } = useContext(AuthContext);
+    const { createUser,signInWithGoogle, updateUser, verifyEmail } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const [createUserEmail, setCreateUserEmail] = useState('');
@@ -31,6 +31,7 @@ const SignUp = () => {
                     .then(() => {
                         verifyEmail()
                             .then(() => {
+                                toast.success('Please Check Your Email for varify');
                                 handleSaveUser(data.name, data.email);
                             })
                             .catch(err => console.log(err))
@@ -55,10 +56,18 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
-                toast.success('Please Check Your Email for varify');
                 setCreateUserEmail(email);
-
             })
+    }
+
+    const handleGoogleSignIn=()=>{
+        signInWithGoogle()
+        .then(result=>{
+            const user = result.user;
+            handleSaveUser(user.displayName,user.email);
+            
+        })
+        .catch(err=>console.log(err));
     }
 
     return (
@@ -111,7 +120,7 @@ const SignUp = () => {
 
                 </form>
                 <div className="divider">OR</div>
-                <button className="btn btn-outline w-full">Continue with google</button>
+                <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">Continue with google</button>
             </div>
         </div>
     );
