@@ -10,6 +10,7 @@ import Dashboard from "../../Pages/Dashboard/MyAppointment/Dashboard";
 import Home from "../../Pages/Home/Home/Home";
 import ForgetPasswordModal from "../../Pages/Login/ForgetPasswordModal";
 import Login from "../../Pages/Login/Login";
+import NotFound from "../../Pages/NotFound/NotFound";
 import SignUp from "../../Pages/SignUp/SignUp";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'*',
-                element:'NO ITEAMS ARE FOUND'
+                element:<NotFound></NotFound>
             }
         ],
       },
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'*',
-                element:'NO ITEAMS ARE FOUND'
+                element:<NotFound></NotFound>
             }
         ]
       }

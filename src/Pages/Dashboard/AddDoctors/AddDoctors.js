@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { FaImage } from 'react-icons/fa';
 
 const AddDoctors = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -20,17 +21,15 @@ const AddDoctors = () => {
     })
     const handleAddDocto = data => {
         const image = data.img[0];
-        console.log(image);
         const formData = new FormData();
         formData.append("image", image);
 
-        fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${imgHostKey}`, {
+        fetch(`https://api.imgbb.com/1/upload?key=${imgHostKey}`, {
             method: 'POST',
             body: formData,
         })
             .then(res => res.json())
             .then(imageData => {
-                console.log(imageData);
                 if (imageData.success) {
                     const imgUrl = imageData.data.url;
                     const doctor = {
@@ -95,23 +94,13 @@ const AddDoctors = () => {
                     </select>
                 </div>
 
-                <div className="form-control border-dashed border-2 border-gray-400 rounded-lg p-8 flex justify-center items-center   w-full ">
+                <div className="form-control mt-4 border-dashed border-2 border-gray-400 rounded-lg p-8 flex justify-center items-center   w-full ">
                     <label className="label flex flex-col items-center">
-                        <span className="label-text">Photo</span>
+                        <span className="label-text"><FaImage></FaImage></span>
                         <input type="file"
-                            className="sr-only"
+                            className=""
                             {...register("img", { required: "Image  is required" })}/>
-                            <svg
-                            className="w-8 h-8 text-gray-600"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path d="M12 5v14M5 12h14" />
-                        </svg>
+                            
                         {errors.img && <p className='text-error'>{errors.img?.message}</p>}
                     </label>
 
