@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
+import Loading from '../../Shared/Loading/Loading';
 
 const ManageDoctors = () => {
-    const { data: doctors = [],refetch } = useQuery({
+    const [deletingDoctor, setDeletingDoctor] = useState(null);
+    const { data: doctors = [],isLoading, refetch } = useQuery({
         queryKey: ['doctors-info'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/doctors', {
@@ -12,23 +15,32 @@ const ManageDoctors = () => {
             return data;
         }
     });
-    const handleDelteDoctor = id =>{
-        fetch(`http://localhost:5000/doctors/${id}`,{
-            method:'DELETE',
+    const handleDeleteCancel =()=>{
+        setDeletingDoctor(null);
+    }
+    const handleDeleteConfirm =()=>{
+        handleDelteDoctor(deletingDoctor._id);
+    }
+    const handleDelteDoctor = id => {
+        fetch(`http://localhost:5000/doctors/${id}`, {
+            method: 'DELETE',
             credentials: 'include'
         })
-        .then(res=>res.json())
-        .then(data=>{
+            .then(res => res.json())
+            .then(data => {
 
-            refetch();
-        })
+                refetch();
+                setDeletingDoctor(null);
+            })
+    }
+    if(isLoading){
+        return <Loading></Loading>
     }
     return (
         <div>
             <h2 className="text-3xl my-2">Manage Doctors</h2>
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th>
@@ -49,7 +61,7 @@ const ManageDoctors = () => {
                                 <div className="flex items-center space-x-3">
                                     <div className="avatar">
                                         <div className="w-16 rounded-full">
-                                            <img alt='' src={doctor.imgUrl}/>
+                                            <img alt='' src={doctor.imgUrl} />
                                         </div>
                                     </div>
 
@@ -58,7 +70,7 @@ const ManageDoctors = () => {
                             <td> {doctor.name}</td>
                             <td>{doctor.specialty}</td>
                             <th>
-                                <button onClick={()=>handleDelteDoctor(doctor._id)} className="btn btn-warning  btn-xs ">Delete</button>
+                                <label onClick={() => setDeletingDoctor(doctor)} htmlFor="confirmation-modal" className="btn btn-error text-base-100 btn-xs">Delete</label>
                             </th>
                         </tr>)}
 
@@ -66,6 +78,12 @@ const ManageDoctors = () => {
                     </tbody>
                 </table>
             </div>
+            {deletingDoctor && <ConfirmationModal
+                title={`Are you sure you want to delete D. ${deletingDoctor.name}`}
+                body={`If you delete ${deletingDoctor.name} then it's can not be undo`}
+                cancel={()=>handleDeleteCancel}
+                action={()=>handleDeleteConfirm}
+            ></ConfirmationModal>}
 
         </div>
     );
