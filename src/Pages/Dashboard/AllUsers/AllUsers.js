@@ -85,8 +85,8 @@ const AllUsers = () => {
             {deletingUser && <ConfirmationModal
                 title={`Are you sure you want to delete ${deletingUser.name}`}
                 body={`If you delete the user you will not get the user information again.`}
-                cancel={()=>handleDeleteCancel}
-                action={()=>handleDeleteConfirm}
+                cancel={handleDeleteCancel}
+                action={handleDeleteConfirm}
             ></ConfirmationModal>}
         </div>
     );

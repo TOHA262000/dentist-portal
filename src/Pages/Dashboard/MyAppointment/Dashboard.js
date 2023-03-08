@@ -83,6 +83,7 @@ const Dashboard = () => {
                             <th>Service</th>
                             <th>Time</th>
                             <th>Date</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>

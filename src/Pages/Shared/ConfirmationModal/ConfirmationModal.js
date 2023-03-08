@@ -9,8 +9,8 @@ const ConfirmationModal = ({title,body,cancel,action}) => {
                     <h3 className="font-bold text-lg">{title}</h3>
                     <p className="py-4">{body}</p>
                     <div className="modal-action">
-                        <label onClick={cancel()}  className="btn btn-outline">Cancel</label>
-                        <label onClick={action()} className="btn">Yes</label>
+                        <label onClick={cancel}  className="btn btn-outline">Cancel</label>
+                        <label onClick={action} className="btn">Yes</label>
                     </div>
                 </div>
             </div>

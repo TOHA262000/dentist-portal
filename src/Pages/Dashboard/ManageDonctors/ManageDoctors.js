@@ -81,8 +81,8 @@ const ManageDoctors = () => {
             {deletingDoctor && <ConfirmationModal
                 title={`Are you sure you want to delete D. ${deletingDoctor.name}`}
                 body={`If you delete ${deletingDoctor.name} then it's can not be undo`}
-                cancel={()=>handleDeleteCancel}
-                action={()=>handleDeleteConfirm}
+                cancel={handleDeleteCancel}
+                action={handleDeleteConfirm}
             ></ConfirmationModal>}
 
         </div>

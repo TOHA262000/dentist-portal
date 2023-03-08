@@ -7,6 +7,7 @@ import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
 import Feture from "../../Pages/Dashboard/Feture/Feture";
 import ManageDoctors from "../../Pages/Dashboard/ManageDonctors/ManageDoctors";
 import Dashboard from "../../Pages/Dashboard/MyAppointment/Dashboard";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
 import Home from "../../Pages/Home/Home/Home";
 import ForgetPasswordModal from "../../Pages/Login/ForgetPasswordModal";
 import Login from "../../Pages/Login/Login";
@@ -69,6 +70,12 @@ const router = createBrowserRouter([
             {
                 path:'/dashboard/managedoctors',
                 element:<AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
+            },
+            {
+                path:'/dashboard/payment/:id',
+                loader:({params})=>fetch(`http://localhost:5000/booking/${params.id}`),
+                element:<Payment></Payment>,
+                
             },
             {
                 path:'*',
