@@ -13,12 +13,12 @@ const DashboardLayout = () => {
             <Nav></Nav>
             <div className="drawer drawer-mobile">
                 <input id="dashboard-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content bg-base-300 p-5">
+                <div className="drawer-content bg-gray-100 p-5">
                     <Outlet></Outlet>
                 </div>
                 <div className=" drawer-side">
                     <label htmlFor="dashboard-drawer-2" className="drawer-overlay"></label>
-                    <ul className="bg-base-100 menu p-4 w-80  text-base-content">
+                    <ul className=" menu p-4 w-80  text-base-content">
                         <li><Link to='/dashboard'>My Appointments</Link></li>
                         {isAdmin &&
                             <>
