@@ -16,7 +16,7 @@ const AllUsers = () => {
     const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users', {
+            const res = await fetch('https://dentist-portal-server.vercel.app/users', {
                 credentials: 'include'
             });
             const data = await res.json();
@@ -25,7 +25,7 @@ const AllUsers = () => {
     });
 
     const handleMakeAdmin = id => {
-        fetch(`http://localhost:5000/users/admin/${id}`, {
+        fetch(`https://dentist-portal-server.vercel.app/users/admin/${id}`, {
             method: 'PUT',
             credentials: 'include'
         })
@@ -38,7 +38,7 @@ const AllUsers = () => {
             })
     }
     const handleDelteUser = id => {
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://dentist-portal-server.vercel.app/users/${id}`, {
             method: 'DELETE',
             credentials: 'include'
         })

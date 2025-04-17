@@ -8,7 +8,7 @@ const CheckoutForm = ({ booking }) => {
     const stripe = useStripe();
     const elements = useElements();
     useEffect(() => {
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://dentist-portal-server.vercel.app/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(booking),

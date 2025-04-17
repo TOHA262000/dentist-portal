@@ -18,7 +18,7 @@ const Dashboard = () => {
     const { refetch } = useQuery({
         queryKey: ['bookings', formatedDate, user.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/bookings?formatedDate=${formatedDate}&email=${user.email}`,{
+            const res = await fetch(`https://dentist-portal-server.vercel.app/bookings?formatedDate=${formatedDate}&email=${user.email}`,{
                 credentials:'include'
             });
             const data = await res.json();
@@ -46,7 +46,7 @@ const Dashboard = () => {
     //All booking show
     const handleAllBooking = () => {
         setShowCalender(false);
-        fetch(`http://localhost:5000/bookings/all?email=${user.email}`, {
+        fetch(`https://dentist-portal-server.vercel.app/bookings/all?email=${user.email}`, {
             credentials: 'include'
         })
         .then(res => res.json())

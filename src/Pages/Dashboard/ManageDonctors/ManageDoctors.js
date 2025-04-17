@@ -8,7 +8,7 @@ const ManageDoctors = () => {
     const { data: doctors = [],isLoading, refetch } = useQuery({
         queryKey: ['doctors-info'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/doctors', {
+            const res = await fetch('https://dentist-portal-server.vercel.app/doctors', {
                 credentials: 'include'
             });
             const data = res.json();
@@ -22,7 +22,7 @@ const ManageDoctors = () => {
         handleDelteDoctor(deletingDoctor._id);
     }
     const handleDelteDoctor = id => {
-        fetch(`http://localhost:5000/doctors/${id}`, {
+        fetch(`https://dentist-portal-server.vercel.app/doctors/${id}`, {
             method: 'DELETE',
             credentials: 'include'
         })
