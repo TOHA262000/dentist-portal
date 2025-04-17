@@ -7,7 +7,7 @@ import TableRow from './TableRow';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
-    const [bookings, setBookings] = useState([])
+    const [bookings, setBookings] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showCalender, setShowCalender] = useState(false);
     const formatedDate = format(selectedDate, 'PP');

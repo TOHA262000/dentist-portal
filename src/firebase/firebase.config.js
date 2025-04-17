@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey:process.env.REACT_APP_apiKey,
-  authDomain:process.env.REACT_APP_authDomain,
-  projectId:process.env.REACT_APP_projectId,
-  storageBucket:process.env.REACT_APP_storageBucket,
-  messagingSenderId:process.env.REACT_APP_messagingSenderId,
-  appId:process.env.REACT_APP_appId,
+  apiKey: "AIzaSyDs3_nHk3AFKiPPr04PKT6RS_q-cmeY80g",
+  authDomain: "dentist-portal-d589b.firebaseapp.com",
+  projectId: "dentist-portal-d589b",
+  storageBucket: "dentist-portal-d589b.firebasestorage.app",
+  messagingSenderId: "984688286457",
+  appId: "1:984688286457:web:723678c0b31cd50458e028"
 };
 
 // Initialize Firebase
